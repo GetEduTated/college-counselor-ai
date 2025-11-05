@@ -33,13 +33,18 @@ export async function getMotivationalQuote(mood: string): Promise<string> {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
     const prompt = `You are 'Vanessa', an AI college counselor with a witty, humorous, and sometimes sarcastic personality. You are supportive but also love to poke fun at students to keep them motivated and grounded. A high school student is telling you how they feel about their college journey. Their mood is: "${mood}". Generate a short, witty, and motivational response based on this mood. It can be funny, sarcastic, or a playful challenge. For example, if they're 'Stressed', you might say "The best way to relieve stress is to... get all your applications done. Chop chop!". If they're 'Excited', you could say "Great! Let's channel that energy into another scholarship essay, shall we?". Keep it short and punchy.`;
-
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-    });
     
-    return response.text;
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+        });
+        
+        return response.text;
+    } catch (error) {
+        console.error("Error fetching motivational quote from Gemini API:", error);
+        throw new Error("I'm feeling a bit uninspired right now. Couldn't fetch a quote. Please try again in a moment.");
+    }
 }
 
 
@@ -110,16 +115,26 @@ export async function getUpdatedTimeline(currentTimeline: TimelineSection[], use
     
     const prompt = `Here is the student's current timeline:\n${JSON.stringify(currentTimeline, null, 2)}\n\nHere is the student's update:\n"${userUpdate}"\n\nPlease analyze the update and return the complete, modified timeline JSON.`;
 
-    const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        config: {
-            systemInstruction: timelineUpdateSystemInstruction,
-            responseMimeType: "application/json",
-            responseSchema: timelineResponseSchema,
-        },
-    });
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                systemInstruction: timelineUpdateSystemInstruction,
+                responseMimeType: "application/json",
+                responseSchema: timelineResponseSchema,
+            },
+        });
 
-    const jsonText = response.text.trim();
-    return JSON.parse(jsonText);
+        const jsonText = response.text.trim();
+        return JSON.parse(jsonText);
+    } catch (error) {
+        console.error("Error updating timeline with Gemini API:", error);
+        if (error instanceof SyntaxError) {
+            // This catches errors from JSON.parse
+            throw new Error("Oops, I got my wires crossed and couldn't save that update. The format was unexpected. Can you try phrasing it differently?");
+        }
+        // This catches API or other errors
+        throw new Error("My circuits are a bit fuzzy right now, and I couldn't update your timeline. Please try again in a bit.");
+    }
 }

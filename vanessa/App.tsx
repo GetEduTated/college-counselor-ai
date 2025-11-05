@@ -26,14 +26,16 @@ export interface Theme {
 export const counselorTheme: Theme = {
   name: 'Counselor',
   colors: {
-    '--color-bg-primary': '#1A362E', // Deep Forest Green
+    '--color-bg-primary': '#4E342E', // Rich Dark Brown
+    '--color-bg-header': 'rgba(78, 52, 46, 0.95)', // Rich Dark Brown for Header (with alpha)
+    '--color-bg-nav': 'rgba(78, 52, 46, 0.95)', // Rich Dark Brown for Nav (with alpha)
     '--color-bg-secondary': '#F8F9FA', // Very light grey, almost white
     '--color-bg-muted': '#E9ECEF',    // Lighter Gray for hover on light elements
     '--color-text-primary': '#212529', // Dark text for light backgrounds
     '--color-text-secondary': '#F8F9FA', // Light text for dark backgrounds
     '--color-text-muted': '#6C757D',   // Muted gray text
     '--color-accent-primary': '#FFBF00', // Golden Amber
-    '--color-accent-secondary': '#2C5A4B', // Lighter, solid green for user chat bubbles etc.
+    '--color-accent-secondary': '#795548', // Medium Brown for user chat bubbles etc.
     '--color-accent-primary-hover': '#E6AC00', // Darker Amber
     '--color-border-primary': '#DEE2E6', // Border on light bg
     '--color-border-on-dark': 'rgba(248, 249, 250, 0.25)', // Border on dark bg (Header, Nav)
@@ -49,56 +51,29 @@ const initialTimelineData: TimelineSection[] = [
     {
         id: 'jr-spring', title: 'Junior Year - Spring',
         items: [
-            { id: 'jrs-1', title: 'Standardized Testing (SAT/ACT)', date: 'March - May', 
-              description: 'Prepare for and take the SAT or ACT. Many students take it for the first time in the spring.', 
-              todos: [
-                {id: 'jrs-1-t1', text: 'Register for SAT/ACT', isCompleted: false, priority: 'High', dueDate: '2025-03-15'}, 
-                {id: 'jrs-1-t2', text: 'Study for test', isCompleted: false, priority: 'Medium'}, 
-                {id: 'jrs-1-t3', text: 'Take SAT/ACT', isCompleted: false, priority: 'High', dueDate: '2025-05-03', notes: "Don't forget photo ID and admission ticket."}
-              ], 
-              status: 'todo' 
+            { 
+                id: 'jrs-1', 
+                title: 'Standardized Testing (SAT/ACT)', 
+                date: 'March - May', 
+                description: 'Prepare for and take the SAT or ACT. Many students take it for the first time in the spring.', 
+                todos: [
+                    {
+                        id: 'jrs-1-t1', 
+                        text: 'Register for SAT/ACT', 
+                        isCompleted: false, 
+                        priority: 'High', 
+                        dueDate: '2025-03-15',
+                        notes: "Don't forget photo ID and admission ticket."
+                    }
+                ], 
+                status: 'todo' 
             },
-            { id: 'jrs-2', title: 'Start College Research', date: 'April - June', 
-              description: 'Begin researching colleges that interest you. Think about size, location, majors, and campus culture.', 
-              todos: [
-                {id: 'jrs-2-t1', text: 'Make a list of 15-20 potential colleges', isCompleted: true, priority: 'Medium', subtasks: [{id: 'jrs-2-t1-s1', text: 'Research 5 safety schools', isCompleted: true}, {id: 'jrs-2-t1-s2', text: 'Research 10 match schools', isCompleted: true}]}
-              ], 
-              status: 'done' 
-            },
         ]
     },
-    {
-        id: 'sr-summer', title: 'Summer Before Senior Year',
-        items: [
-            { id: 'srs-1', title: 'Brainstorm & Draft Essays', date: 'July - August', description: 'Start working on your main college essay (like the Common App essay).', todos: [{id: 'srs-1-t1', text: 'Brainstorm essay topics', isCompleted: false, priority: 'High'}, {id: 'srs-1-t2', text: 'Write first draft of main essay', isCompleted: false, priority: 'Medium', dueDate: '2024-08-31'}], status: 'todo' },
-            { id: 'srs-2', title: 'Create a Common App Account', date: 'August 1st', description: 'The Common Application opens. Create your account and start filling out the basic sections.', todos: [{id: 'srs-2-t1', text: 'Create Common App account', isCompleted: false, priority: 'High', dueDate: '2024-08-01'}], status: 'todo' },
-        ]
-    },
-    {
-        id: 'sr-fall', title: 'Senior Year - Fall',
-        items: [
-            { id: 'srf-1', title: 'Finalize College List', date: 'September', description: 'Narrow your list down to 8-12 colleges, including a mix of safety, match, and reach schools.', todos: [{id: 'srf-1-t1', text: 'Finalize list of colleges to apply to', isCompleted: false, priority: 'High'}], status: 'todo' },
-            { id: 'srf-2', title: 'Request Letters of Recommendation', date: 'September - October', description: 'Ask teachers and your counselor for letters of recommendation. Give them plenty of notice!', todos: [{id: 'srf-2-t1', text: 'Ask 2-3 teachers for recommendations', isCompleted: false, priority: 'High', notes: 'Provide them with my resume and a list of colleges.'}], status: 'todo' },
-            { id: 'srf-3', title: 'Early Application Deadlines', date: 'Nov 1 / Nov 15', description: 'Deadlines for Early Decision (ED) and Early Action (EA) are typically in November.', todos: [{id: 'srf-3-t1', text: 'Submit Early Decision/Action applications', isCompleted: false, priority: 'High'}], status: 'todo' },
-            { id: 'srf-4', title: 'FAFSA Opens', date: 'October 1st', description: 'The Free Application for Federal Student Aid (FAFSA) opens. Submit it as early as possible.', todos: [{id: 'srf-4-t1', text: 'Complete and submit FAFSA', isCompleted: false, priority: 'High'}], status: 'todo' },
-        ]
-    },
-    {
-        id: 'sr-winter', title: 'Senior Year - Winter',
-        items: [
-            { id: 'srw-1', title: 'Regular Decision Deadlines', date: 'Jan 1 / Jan 15', description: 'Most regular decision application deadlines are in early to mid-January.', todos: [{id: 'srw-1-t1', text: 'Submit all remaining applications', isCompleted: false}], status: 'todo' },
-            { id: 'srw-2', title: 'Submit Mid-Year Reports', date: 'February', description: 'Your counselor will need to send your first semester senior year grades to colleges.', todos: [{id: 'srw-2-t1', text: 'Confirm counselor sent mid-year report', isCompleted: false}], status: 'todo' },
-        ]
-    }
 ];
 
 const initialEventsData: TimelineEvent[] = [
   { id: 'evt-1', title: 'SAT Test Date', date: '2025-05-03', category: 'Testing', description: 'Test center is at Northwood High.' },
-  { id: 'evt-2', title: 'Common App Opens', date: '2024-08-01', category: 'Deadline', description: 'Start filling out the main sections.' },
-  { id: 'evt-3', title: 'Campus Visit: State University', date: '2025-04-12', category: 'Visit' },
-  { id: 'evt-4', title: 'FAFSA Opens', date: '2024-10-01', category: 'Deadline' },
-  { id: 'evt-5', title: 'Request Letters of Rec', date: '2024-09-15', category: 'To-Do', description: 'Ask Mr. Smith and Ms. Jones.' },
-  { id: 'evt-6', title: 'Early Action Deadline', date: '2024-11-01', category: 'Deadline' },
 ];
 
 // --- LOGIN VIEW ---
@@ -181,7 +156,7 @@ const Navigation: React.FC<{ activeTab: Tab; setActiveTab: (tab: Tab) => void; t
   };
 
   return (
-    <div className="bg-[var(--color-bg-primary)]/95 backdrop-blur-sm md:shadow-sm fixed bottom-0 left-0 right-0 z-20 border-t border-[var(--color-border-on-dark)] md:sticky md:top-[76px] md:z-10 md:border-t-0">
+    <div className="bg-[var(--color-bg-nav)] backdrop-blur-sm md:shadow-sm fixed bottom-0 left-0 right-0 z-20 border-t border-[var(--color-border-on-dark)] md:sticky md:top-[76px] md:z-10 md:border-t-0">
       <nav className="flex justify-around md:justify-center md:-mb-px max-w-5xl mx-auto">
         <button onClick={() => setActiveTab('Home')} className={getButtonClasses('Home')}>
           <HomeIcon className="w-6 h-6 md:w-5 md:h-5" />
@@ -228,7 +203,7 @@ const HomeView: React.FC<{ onSendMessage: (message: string) => void }> = ({ onSe
             setQuote(newQuote);
         } catch (err) {
             console.error(err);
-            setError("Couldn't fetch a quote right now.");
+            setError((err as Error).message);
         } finally {
             setIsQuoteLoading(false);
         }
@@ -282,7 +257,7 @@ const HomeView: React.FC<{ onSendMessage: (message: string) => void }> = ({ onSe
                         value={homeInput}
                         onChange={(e) => setHomeInput(e.target.value)}
                         placeholder="Have a quick question for Vanessa?"
-                        className="w-full pl-4 pr-12 py-3 border border-[var(--color-border-primary)] rounded-full focus:ring-2 focus:ring-[var(--color-accent-primary)] focus:outline-none bg-[var(--color-bg-muted)]"
+                        className="w-full pl-4 pr-12 py-3 border border-[var(--color-border-primary)] rounded-full focus:ring-2 focus:ring-[var(--color-accent-primary)] focus:outline-none bg-[var(--color-bg-muted)] text-[var(--color-text-primary)]"
                     />
                     <button
                         type="submit"
@@ -387,7 +362,7 @@ const AddEditTaskModal: React.FC<AddEditTaskModalProps> = ({ task, timelineItems
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="task-text" className="block text-sm font-medium text-[var(--color-text-muted)]">Task</label>
-                        <input type="text" id="task-text" value={text} onChange={e => setText(e.target.value)} required className="mt-1 block w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm" />
+                        <input type="text" id="task-text" value={text} onChange={e => setText(e.target.value)} required className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm" />
                     </div>
                      <div>
                         <label htmlFor="task-parent" className="block text-sm font-medium text-[var(--color-text-muted)]">Goal / Parent Item</label>
@@ -396,7 +371,7 @@ const AddEditTaskModal: React.FC<AddEditTaskModalProps> = ({ task, timelineItems
                             value={parentId} 
                             onChange={e => setParentId(e.target.value)} 
                             disabled={!!task} // Disable if editing
-                            className="mt-1 block w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm disabled:bg-gray-100"
+                            className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
                         >
                             {timelineItems.map(item => (
                                 <option key={item.id} value={item.id}>{item.title}</option>
@@ -405,7 +380,7 @@ const AddEditTaskModal: React.FC<AddEditTaskModalProps> = ({ task, timelineItems
                     </div>
                     <div>
                         <label htmlFor="task-priority" className="block text-sm font-medium text-[var(--color-text-muted)]">Priority</label>
-                        <select id="task-priority" value={priority} onChange={e => setPriority(e.target.value as 'High' | 'Medium' | 'Low')} className="mt-1 block w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm">
+                        <select id="task-priority" value={priority} onChange={e => setPriority(e.target.value as 'High' | 'Medium' | 'Low')} className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm">
                             <option>Low</option>
                             <option>Medium</option>
                             <option>High</option>
@@ -413,11 +388,11 @@ const AddEditTaskModal: React.FC<AddEditTaskModalProps> = ({ task, timelineItems
                     </div>
                     <div>
                         <label htmlFor="task-duedate" className="block text-sm font-medium text-[var(--color-text-muted)]">Due Date</label>
-                        <input type="date" id="task-duedate" value={dueDate} onChange={e => setDueDate(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm" />
+                        <input type="date" id="task-duedate" value={dueDate} onChange={e => setDueDate(e.target.value)} className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm" style={{ colorScheme: 'dark' }} />
                     </div>
                     <div>
                         <label htmlFor="task-notes" className="block text-sm font-medium text-[var(--color-text-muted)]">Notes</label>
-                        <textarea id="task-notes" value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="mt-1 block w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm"></textarea>
+                        <textarea id="task-notes" value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] sm:text-sm"></textarea>
                     </div>
                     <div className="flex justify-end gap-3 pt-4">
                         <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-accent-primary)]">Cancel</button>
@@ -431,6 +406,18 @@ const AddEditTaskModal: React.FC<AddEditTaskModalProps> = ({ task, timelineItems
 
 const TaskCard: React.FC<{ task: FlatTask; onUpdate: (updatedTask: TodoItem) => void; onEdit: (task: FlatTask) => void; }> = ({ task, onUpdate, onEdit }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isJustCompleted, setIsJustCompleted] = useState(false);
+    const prevIsCompleted = useRef(task.isCompleted);
+
+    useEffect(() => {
+        // Trigger animation only when the task changes from incomplete to complete
+        if (task.isCompleted && !prevIsCompleted.current) {
+            setIsJustCompleted(true);
+            const timer = setTimeout(() => setIsJustCompleted(false), 600); // Match animation duration
+            return () => clearTimeout(timer);
+        }
+        prevIsCompleted.current = task.isCompleted;
+    }, [task.isCompleted]);
     
     const priorityStyles = {
         High: 'bg-red-100 text-red-800',
@@ -450,7 +437,7 @@ const TaskCard: React.FC<{ task: FlatTask; onUpdate: (updatedTask: TodoItem) => 
     };
 
     return (
-        <div className={`p-4 rounded-lg shadow-sm border transition-all duration-300 ${task.isCompleted ? 'bg-green-50/50 border-green-200 opacity-70' : 'bg-white border-[var(--color-border-primary)]'}`}>
+        <div className={`p-4 rounded-lg shadow-sm border transition-all duration-300 ${task.isCompleted ? 'bg-green-50/50 border-green-200 opacity-70' : 'bg-white border-[var(--color-border-primary)]'} ${isJustCompleted ? 'animate-flash' : ''}`}>
             <div className="flex items-start gap-4">
                 <input
                     type="checkbox"
@@ -602,7 +589,7 @@ const TaskListView: React.FC<{ timelineData: TimelineSection[], setTimelineData:
             <div className="max-w-4xl mx-auto">
                 <header className="md:flex justify-between items-center mb-6 space-y-4 md:space-y-0">
                     <h2 className="text-3xl font-bold text-[var(--color-text-primary)]">My Tasks</h2>
-                    <div className="flex items-center gap-4">
+                    <div className="flex justify-between md:justify-start items-center gap-4">
                         <select
                             value={sortType}
                             onChange={(e) => setSortType(e.target.value as SortType)}
@@ -966,13 +953,14 @@ const App: React.FC = () => {
             }
         } catch (error) {
             console.error('Error sending message:', error);
+            const errorMessage = "Yikes, a digital brain-freeze! I couldn't process that. Could you try sending it again?";
             setMessages((prev) => {
                 const newMessages = [...prev];
                 const lastMessage = newMessages[newMessages.length - 1];
                 if (lastMessage?.role === Role.MODEL && lastMessage.text === '') {
-                   newMessages[newMessages.length - 1] = { role: Role.MODEL, text: 'Sorry, I had trouble connecting. Please try again.' };
+                   newMessages[newMessages.length - 1] = { role: Role.MODEL, text: errorMessage };
                 } else {
-                   newMessages.push({ role: Role.MODEL, text: 'Sorry, I had trouble connecting. Please try again.' });
+                   newMessages.push({ role: Role.MODEL, text: errorMessage });
                 }
                 return newMessages;
             });

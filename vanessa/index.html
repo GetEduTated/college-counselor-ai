@@ -42,6 +42,16 @@
     scrollbar-width: thin;
     scrollbar-color: var(--color-text-muted) var(--color-bg-muted);
   }
+
+  /* Task Completion Animation */
+  @keyframes flash-green {
+    0% { transform: scale(1); }
+    50% { background-color: #bbf7d0; transform: scale(1.03); } /* Tailwind green-200 */
+    100% { transform: scale(1); }
+  }
+  .animate-flash {
+    animation: flash-green 0.6s ease-out;
+  }
 </style>
 <link rel="stylesheet" href="/index.css">
 </head>

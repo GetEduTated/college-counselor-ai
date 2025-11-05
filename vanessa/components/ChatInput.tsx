@@ -43,7 +43,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }) => {
           onKeyDown={handleKeyDown}
           placeholder="Ask about colleges, applications, financial aid..."
           disabled={isLoading}
-          className="w-full pl-4 pr-12 py-3 border border-[var(--color-border-primary)] rounded-full focus:ring-2 focus:ring-[var(--color-accent-primary)] focus:outline-none resize-none transition-all duration-200 bg-[var(--color-bg-muted)] disabled:bg-gray-200"
+          className="w-full pl-4 pr-12 py-3 border border-[var(--color-border-primary)] rounded-full focus:ring-2 focus:ring-[var(--color-accent-primary)] focus:outline-none resize-none transition-all duration-200 bg-[var(--color-bg-muted)] text-[var(--color-text-primary)] disabled:bg-gray-200"
           rows={1}
         />
         <button
