@@ -13,7 +13,8 @@ export default async function handler(req, res) {
   try {
     // 2. Initialize Google AI
     // This is safe because it's on the server
-    const genAI = new GoogleGenAI(process.env.API_KEY || '');
+    // --- THIS IS THE NEW, CORRECT LINE ---
+    const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // 3. Call the Gemini API
