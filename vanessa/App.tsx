@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Message, Role, TimelineSection, TimelineItem, TodoItem, Subtask, TimelineEvent, TimelineEventCategory } from './types';
-import { getChatSession, getUpdatedTimeline, getMotivationalQuote } from './services/geminiService';
+import { sendPromptToBackend } from './services/geminiService';
 import Header from './components/Header';
 import ChatMessage from './components/ChatMessage';
 import ChatInput from './components/ChatInput';
@@ -195,19 +195,26 @@ const HomeView: React.FC<{ onSendMessage: (message: string) => void }> = ({ onSe
     const [error, setError] = useState<string | null>(null);
     const [homeInput, setHomeInput] = useState('');
 
-    const handleFetchQuote = async (selectedMood: string) => {
-        setIsQuoteLoading(true);
-        setError(null);
-        try {
-            const newQuote = await getMotivationalQuote(selectedMood);
-            setQuote(newQuote);
-        } catch (err) {
-            console.error(err);
-            setError((err as Error).message);
-        } finally {
-            setIsQuoteLoading(false);
-        }
-    };
+    // --- This is the NEW handleFetchQuote function ---
+
+const handleFetchQuote = async (selectedMood: string) => {
+  setIsQuoteLoading(true);
+  setError(null);
+  try {
+    // We re-use our backend! We just send a different prompt.
+    const prompt = `Give me a short, powerful motivational quote for a student who is feeling: ${selectedMood}`;
+    const newQuote = await sendPromptToBackend(prompt);
+
+    // The API might return the quote with "" marks, so we remove them.
+    setQuote(newQuote.replace(/"/g, '')); 
+
+  } catch (err) {
+    console.error(err);
+    setError((err as Error).message);
+  } finally {
+    setIsQuoteLoading(false);
+  }
+};
 
     const handleCustomMoodSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -932,42 +939,41 @@ const App: React.FC = () => {
         setEvents(initialEventsData);
         setMessages([]);
     };
-    
-    const handleSendMessage = async (text: string) => {
-        const userMessage: Message = { role: Role.USER, text };
-        setMessages((prevMessages) => [...prevMessages, userMessage]);
-        setIsChatLoading(true);
-    
-        try {
-            const chat = getChatSession();
-            const result = await chat.sendMessageStream({ message: text });
-            let modelResponse = '';
-            setMessages((prev) => [...prev, { role: Role.MODEL, text: '' }]);
-            for await (const chunk of result) {
-                modelResponse += chunk.text;
-                setMessages((prev) => {
-                    const newMessages = [...prev];
-                    newMessages[newMessages.length - 1] = { role: Role.MODEL, text: modelResponse };
-                    return newMessages;
-                });
-            }
-        } catch (error) {
-            console.error('Error sending message:', error);
-            const errorMessage = "Yikes, a digital brain-freeze! I couldn't process that. Could you try sending it again?";
-            setMessages((prev) => {
-                const newMessages = [...prev];
-                const lastMessage = newMessages[newMessages.length - 1];
-                if (lastMessage?.role === Role.MODEL && lastMessage.text === '') {
-                   newMessages[newMessages.length - 1] = { role: Role.MODEL, text: errorMessage };
-                } else {
-                   newMessages.push({ role: Role.MODEL, text: errorMessage });
-                }
-                return newMessages;
-            });
-        } finally {
-            setIsChatLoading(false);
-        }
-    };
+    // --- This is the NEW handleSendMessage function ---
+
+const handleSendMessage = async (text: string) => {
+  const userMessage: Message = { role: Role.USER, text };
+  setMessages((prevMessages) => [...prevMessages, userMessage]);
+  setIsChatLoading(true);
+
+  // Add a placeholder for the model's response
+  setMessages((prev) => [...prev, { role: Role.MODEL, text: '' }]);
+
+  try {
+    // Call our new backend function
+    const modelResponse = await sendPromptToBackend(text);
+
+    // Update the last message (the placeholder) with the full response
+    setMessages((prev) => {
+      const newMessages = [...prev];
+      newMessages[newMessages.length - 1] = { role: Role.MODEL, text: modelResponse };
+      return newMessages;
+    });
+
+  } catch (error) {
+    console.error('Error sending message:', error);
+    const errorMessage = "Yikes, a digital brain-freeze! I couldn't process that. Could you try sending it again?";
+
+    // Update the placeholder with an error message
+    setMessages((prev) => {
+      const newMessages = [...prev];
+      newMessages[newMessages.length - 1] = { role: Role.MODEL, text: errorMessage };
+      return newMessages;
+    });
+  } finally {
+    setIsChatLoading(false);
+  }
+};
     
     const handleSendFromHome = (text: string) => {
         handleSendMessage(text);
