@@ -15,12 +15,14 @@ export default async function handler(req, res) {
     // This is safe because it's on the server
     // --- THIS IS THE NEW, CORRECT LINE ---
     const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // 3. Call the Gemini API using the new SDK structure
+    const result = await genAI.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: [{ parts: [{ text: prompt }] }],
+});
 
-    // 3. Call the Gemini API
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+const response = result.response;
+const text = response.text();
 
     // 4. Send the API's response back to the browser
     res.status(200).json({ text });
